@@ -48,4 +48,3 @@ class Usuario{
 
 module.exports = Usuario;
 
-/*Camilo tiene hambre*/

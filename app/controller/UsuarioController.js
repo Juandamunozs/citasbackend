@@ -10,7 +10,7 @@ class UsuarioController{
     }
 
     async mostrar(req, res){
-       res.json(await Usuario.listar()); //asincrono
+       res.json(await Usuario.listar()); 
     }
 }
 
