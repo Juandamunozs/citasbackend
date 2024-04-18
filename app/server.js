@@ -15,7 +15,7 @@ app.use(cors({
   }));
 
 app.get('/', (req, res) => {
-    res.send('Servidor Activo 🟢');
+    res.send('Servidor  de Medicitas Activo 🟢...');
 });
 
 // Se añade el prefijo '/api' antes de acceder a las rutas definidas en el router
