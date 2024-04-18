@@ -9,6 +9,8 @@ class Usuario{
         this.edad = edad;
         this.direccion = direccion;
         this.telefono = telefono;
+
+        
     }
 
     async guardar(){
