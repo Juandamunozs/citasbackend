@@ -11,6 +11,7 @@ class Usuario{
         this.telefono = telefono;
 
         
+        
     }
 
     async guardar(){
