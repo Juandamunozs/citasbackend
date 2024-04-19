@@ -48,3 +48,5 @@ class Usuario{
 
 module.exports = Usuario;
 
+/* la api usuario se consume asi http://localhost:3200/api/usuario: */
+
