@@ -48,16 +48,16 @@ class Usuario{
     static async verificarCredenciales(tipo_documento, user_name, password) {
         const query = `SELECT * FROM usuario WHERE tipoDocumento = '${tipo_documento}' AND username = '${user_name}' AND password = '${password}';`;
         const respuesta = await db.listar(query);
-        console.log("Consulta SQL:", query);
+        /*console.log("Consulta SQL:", query);
         console.log("Datos recibidos:", { tipo_documento, user_name, password });
-        console.log("Datos devueltos:", respuesta);
+        console.log("Datos devueltos:", respuesta);*/
         
         if (respuesta.exito && respuesta.resultado) {
             const usuarioEncontrado = respuesta.resultado;
-            console.log("Usuario encontrado:", usuarioEncontrado);
+           //console.log("Usuario encontrado:", usuarioEncontrado);
             return usuarioEncontrado;
         } else {
-            console.log("No se encontraron usuarios.");
+            //console.log("No se encontraron usuarios.");
             return null;
         }
     }
