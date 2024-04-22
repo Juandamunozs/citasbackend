@@ -12,6 +12,22 @@ class UsuarioController{
     async mostrar(req, res){
        res.json(await Usuario.listar()); 
     }
+
+    async iniciarSesion(req, res) {
+        const { tipo_documento, user_name, password } = req.body;
+
+    
+        const usuario = await Usuario.verificarCredenciales(tipo_documento, user_name, password);
+
+        if (usuario) {
+            // Credenciales válidas, puedes iniciar sesión
+            res.json({ mensaje: true, usuario });
+        } else {
+            // Credenciales inválidas
+            res.status(401).json({ mensaje: false });
+        }
+    }
+
 }
 
 module.exports = new UsuarioController;

@@ -44,6 +44,12 @@ class Usuario{
         return await db.listar(query, true) //asi se llama todos los usuarios
         //return await db.listar(query) asi se llama un usuario el 1
     }
+
+    static async verificarCredenciales(tipo_documento,user_name, password) {
+        const query = `SELECT * FROM usuario WHERE tipoDocumento = '${tipo_documento}' AND username = '${user_name}' AND password = '${password}';`;
+        const usuarios = await db.listar(query);
+        return usuarios.length > 0 ? usuarios[0] : null;
+    }
 }
 
 module.exports = Usuario;
