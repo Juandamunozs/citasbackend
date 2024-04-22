@@ -39,7 +39,7 @@ class Usuario{
        return await db.ejecutar(query); 
     }
     static async listar(){
-        const query = `SELECT tipoDocumento, username, password FROM usuario;`
+        const query = `SELECT *FROM usuario;`
 
         return await db.listar(query, true) //asi se llama todos los usuarios
         //return await db.listar(query) asi se llama un usuario el 1
