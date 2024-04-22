@@ -45,14 +45,29 @@ class Usuario{
         //return await db.listar(query) asi se llama un usuario el 1
     }
 
-    static async verificarCredenciales(tipo_documento,user_name, password) {
+    static async verificarCredenciales(tipo_documento, user_name, password) {
         const query = `SELECT * FROM usuario WHERE tipoDocumento = '${tipo_documento}' AND username = '${user_name}' AND password = '${password}';`;
-        const usuarios = await db.listar(query);
-        return usuarios.length > 0 ? usuarios[0] : null;
+        const respuesta = await db.listar(query);
+        console.log("Consulta SQL:", query);
+        console.log("Datos recibidos:", { tipo_documento, user_name, password });
+        console.log("Datos devueltos:", respuesta);
+        
+        if (respuesta.exito && respuesta.resultado) {
+            const usuarioEncontrado = respuesta.resultado;
+            console.log("Usuario encontrado:", usuarioEncontrado);
+            return usuarioEncontrado;
+        } else {
+            console.log("No se encontraron usuarios.");
+            return null;
+        }
     }
 }
 
 module.exports = Usuario;
 
-/* la api usuario se consume asi http://localhost:3200/api/usuario: */
+/* la API usuario para crear cuenta se consume asi http://localhost:3200/api/usuario: */
+/* La API usuario para loguearse se consume asi http://localhost:3200/api/usuario/login*/
 
+//console.log("Consulta SQL:", query); // Agrega esta línea para imprimir la consulta SQL
+//console.log("Datos recibidos:", { tipo_documento, user_name, password }); // Agrega esta línea para imprimir los datos recibidos
+//console.log("Datos devueltos:", usuarios); // Agrega esta línea para imprimir los datos devueltos
