@@ -27,7 +27,7 @@ class UsuarioController{
             res.json({ mensaje: true/*, usuario*/ });
         } else {
             // Credenciales inválidas
-            res.status(401).json({ mensaje: false });
+            res.json({ mensaje: false });
         }
     }
 
