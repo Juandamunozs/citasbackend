@@ -1,5 +1,5 @@
 const db = require('../src/db');
-class Citas{
+class Cita{
     constructor(nombre, apellido, cedula, numero_celular, email, direccion, fecha_nacimiento, genero){
         this.nombre = nombre;
         this.apellido = apellido;
@@ -47,4 +47,4 @@ class Citas{
 
 }
 
-module.exports = Citas;
+module.exports = Cita;
