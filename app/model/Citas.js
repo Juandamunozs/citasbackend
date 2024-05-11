@@ -13,7 +13,7 @@ class Citas{
 
     async guardar(){
         const query = `
-        INSERT INTO citas.citas
+        INSERT INTO citas.cita
         (
         nombre,
         apellido,
@@ -39,7 +39,7 @@ class Citas{
        return await db.ejecutar(query); 
     }
     static async listar(){
-        const query = `SELECT *FROM citas;`
+        const query = `SELECT *FROM cita;`
 
         return await db.listar(query, true) //asi se llama todos los usuarios
         //return await db.listar(query) asi se llama un usuario el 1
