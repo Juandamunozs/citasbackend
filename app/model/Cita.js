@@ -44,7 +44,44 @@ class Cita{
         return await db.listar(query, true) //asi se llama todos los usuarios
         //return await db.listar(query) asi se llama un usuario el 1
     }
+    
+    
+    static async notificacion(/*segundo, minuto, hora, dia, mes, año*/) {
+        
+        var ahora = new Date();
+        var diaA = ahora.getDate();
+        var mesA = ahora.getMonth() + 1; // Los meses comienzan desde 0
+        var añoA = ahora.getFullYear();
+        /*var horaA = ahora.getHours();
+        var minutoA = ahora.getMinutes();
+        var segundoA = ahora.getSeconds();*/
 
+        const fecha = `${añoA}-${mesA < 10 ? '0' : ''}${mesA}-${diaA < 10 ? '0' : ''}${diaA}`;
+       // console.log(fecha);
+        const query = `SELECT cedula, fechaNacimiento, nombre FROM cita WHERE fechaNacimiento = '${fecha}'`;
+        const respuesta = await db.listar(query, true);
+        return respuesta;
+
+        //const años = año - añoA;
+        //console.log("Años " + años);
+       //const meses = mes - mesA;
+        //console.log("Meses " + meses);
+        //const dias = dia - diaA;
+       // console.log("Días " + dias);
+        //const horas = hora - horaA;
+       // console.log("Horas " + horas);
+        
+        // Comprueba si faltan 24 horas o menos para la fecha especificada
+       // if (años == 0 && meses == 0 && dias <= 1 && (dias < 1 /*|| (dias == 1 && horas <= 0*/)) {
+            // Si falta 24 horas o menos, devuelve true
+         //   console.log(true);
+          //  return true;
+       // } else {
+            // Si falta más de 24 horas, devuelve false
+            //console.log(false);
+           // return false;
+       // }
+    }
 }
 
 module.exports = Cita;
