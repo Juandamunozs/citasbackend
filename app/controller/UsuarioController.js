@@ -24,7 +24,7 @@ class UsuarioController{
         //console.log("Resultado de verificarCredenciales:", usuario);
         if (usuario) {
             // Credenciales válidas, puedes iniciar sesión
-            res.json({ mensaje: true/*, usuario*/ });
+            res.json({ mensaje: usuario/*, usuario*/ });
         } else {
             // Credenciales inválidas
             res.json({ mensaje: false });

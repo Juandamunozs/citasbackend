@@ -53,8 +53,8 @@ class Usuario{
         console.log("Datos devueltos:", respuesta);*/
         
         if (respuesta.exito && respuesta.resultado) {
-            const usuarioEncontrado = respuesta.resultado;
-           //console.log("Usuario encontrado:", usuarioEncontrado);
+            const usuarioEncontrado = respuesta.resultado.username;
+            //console.log("Usuario encontrado:", usuarioEncontrado);
             return usuarioEncontrado;
         } else {
             //console.log("No se encontraron usuarios.");
