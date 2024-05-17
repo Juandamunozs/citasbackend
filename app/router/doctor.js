@@ -2,6 +2,6 @@ var router = require('express').Router();
 var DoctorController = require('../controller/DoctorController');
 
 router.post('/', DoctorController.guardar);
-router.get('/', DoctorController.mostrar);
+router.post('/tipo_cita', DoctorController.mostrar);
 
 module.exports = router;

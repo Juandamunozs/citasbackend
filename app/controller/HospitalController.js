@@ -10,11 +10,12 @@ class HospitalController {
     }
 
     async mostrar(req, res) {
+        
         try {
-            const hospitals = await Hospital.listar();
+            const hospitales = await Hospital.listar();
 
-            if (hospitals.resultado.length > 0) {
-                const nombresHospitales = hospitals.resultado.map(hospital => hospital.nombreHospital);
+            if (hospitales.resultado.length > 0) {
+                const nombresHospitales = hospitales.resultado.map(hospital => hospital.nombreHospital);
                 res.json({ nombresHospitales }); // Sending an array of hospital names to the frontend
             } else {
                 res.status(404).json({ message: "No se encontraron hospitales." });

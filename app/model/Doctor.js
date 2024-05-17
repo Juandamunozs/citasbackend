@@ -25,10 +25,14 @@ class Doctor{
     return await db.ejecutar(query); 
     }
 
-    static async listar(){
-        const query = `SELECT nombreDoctor, especialidad, disponibilidad FROM doctor;`
+    static async listar(especialidad){
 
-        return await db.listar(query, true) 
+        const disponibilidad = "Si";
+        const query = `SELECT nombreDoctor, especialidad, disponibilidad FROM doctor WHERE disponibilidad = '${disponibilidad}' && especialidad = '${especialidad}'`;
+
+        const respuesta = await db.listar(query, true) 
+        //console.log(respuesta);
+        return respuesta;
     }
 }
 
