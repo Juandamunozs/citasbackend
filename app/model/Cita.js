@@ -112,6 +112,22 @@ class Cita{
        // }
     }
 
+    static async borrarCita(cedula) {
+        // Formar la consulta SQL
+        const query = `DELETE FROM cita WHERE cedula = '${cedula}'`;
+        
+        // Ejecutar la consulta en la base de datos
+        try {
+            
+            // Si la consulta se ejecutó correctamente, devolver true indicando que la cita se eliminó correctamente.
+            return true;
+        } catch (error) {
+            // Si hubo un error al ejecutar la consulta, devolver false indicando que la cita no se eliminó.
+            console.error("Error al borrar la cita:", error);
+            return false;
+        }
+    }
+
 }
 
 module.exports = Cita;

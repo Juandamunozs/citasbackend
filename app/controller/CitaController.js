@@ -15,6 +15,14 @@ class CitaController {
         res.json(await Cita.listar()); 
     }
 
+    async borrar(req, res) {
+        const { cedula} = req.body;
+
+        const borrar = await Cita.borrarCita(cedula);
+        
+        res.json(borrar);
+    }
+
     async fecha(req, res) {
         try {
             // Tu lógica para obtener la cita...
