@@ -1,12 +1,17 @@
-const Doctor= require('../model/Doctor');
-class DoctorController{
-    async guardar(req, res){
+// controller/DoctorController.js
+const Doctor = require('../model/Doctor');
+
+class DoctorController {
+    async guardar(req, res) {
         const body = req.body;
-
-     const doctor = new Doctor(body.nombreDoctor, body.especialidad, body.disponibilidad);
-       const res_guardar = await doctor.guardar();
-        res.json(res_guardar);
-
+        const doctor = new Doctor(body.nombreDoctor, body.especialidad, body.disponibilidad);
+        try {
+            const res_guardar = await doctor.guardar();
+            res.json(res_guardar);
+        } catch (error) {
+            console.error("Error al guardar el doctor:", error);
+            res.status(500).json({ error: "Error al guardar el doctor." });
+        }
     }
 
     async mostrar(req, res) {
@@ -18,7 +23,7 @@ class DoctorController{
                 // Mapping doctors to the expected structure
                 const medicosDisponibles = doctores.resultado.map(doctor => ({
                     id: doctor.id,
-                    nombre: doctor.nombreDoctor
+                    nombreDoctor: doctor.nombreDoctor
                 }));
                 res.json({ medicosDisponibles });
             } else {
@@ -31,4 +36,4 @@ class DoctorController{
     }
 }
 
-module.exports = new DoctorController;
+module.exports = new DoctorController();
