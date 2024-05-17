@@ -48,7 +48,7 @@ class CitaController {
                         from: 'medicitascali@gmail.com', // Dirección del remitente
                         to: email, // Dirección del destinatario
                         subject: 'Recordatorio de MediCita', // Asunto del correo electrónico
-                        text: 'Estimado '+ nombre + ' '+ apellido +' recuerde asistir a su cita programada para la fecha ' + fecha  + ' con el doctor '+ doctor +' en el hospital ' + hospital +' debe presentarse media hora antes de su cita con su documento de identidad.\n\nPara cualquier duda o consulta, por favor, comuníquese a medicitascali@gmail.com', // Cuerpo del correo electrónico
+                        text: 'Estimado(a) '+ nombre + ' '+ apellido +' recuerde asistir a su cita programada para la fecha ' + fecha  + ' con el doctor '+ doctor +' en el hospital ' + hospital +' debe presentarse media hora antes de su cita con su documento de identidad.\n\nPara cualquier duda o consulta, por favor, comuníquese a medicitascali@gmail.com', // Cuerpo del correo electrónico
                         attachments: [
                             {
                                 filename: 'MediCitas.png', // Nombre del archivo adjunto
