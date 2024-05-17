@@ -9,17 +9,18 @@ class DoctorController{
 
     }
 
-    async mostrar(req, res){
-    
-        const { especialidad} = req.body;
+    async mostrar(req, res) {
+        const { especialidad } = req.body;
         try {
-
             const doctores = await Doctor.listar(especialidad);
-            //console.log(doctor);
 
             if (doctores.resultado.length > 0) {
-                const nombresDoctores = doctores.resultado.map(doctor => doctor.nombreDoctor);
-                res.json({ nombresDoctores }); // Sending an array of hospital names to the frontend
+                // Mapping doctors to the expected structure
+                const medicosDisponibles = doctores.resultado.map(doctor => ({
+                    id: doctor.id,
+                    nombre: doctor.nombreDoctor
+                }));
+                res.json({ medicosDisponibles });
             } else {
                 res.status(404).json({ message: "No se encontraron doctores." });
             }
