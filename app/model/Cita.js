@@ -128,6 +128,20 @@ class Cita{
         }
     }
 
+    static async consultar(cedula) {
+        const query = `SELECT cedula, fechaCita, nombre, apellido, email, doctor, horaCita, hospital FROM cita WHERE cedula = '${cedula}'`;
+        const respuesta = await db.listar(query, true);
+        try {
+            
+            // Si la consulta se ejecutó correctamente, devolver true indicando que la cita se eliminó correctamente.
+            return respuesta;
+        } catch (error) {
+            // Si hubo un error al ejecutar la consulta, devolver false indicando que la cita no se eliminó.
+            console.error("Error al borrar la cita:", error);
+            return false;
+        }
+    }
+
 }
 
 module.exports = Cita;
