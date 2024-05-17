@@ -1,17 +1,19 @@
 const db = require('../src/db');
 class Cita{
-    constructor(nombre, apellido, cedula, numero_celular, email, direccion, fecha_nacimiento, genero, hospital, doctor, notificacion){
+    constructor(nombre, apellido, cedula, numero_celular, email, direccion, fecha_cita, genero, hospital, doctor, notificacion, tipo_cita, hora_cita){
         this.nombre = nombre;
         this.apellido = apellido;
         this.cedula = cedula;
         this.numero_celular = numero_celular;
         this.email = email;
         this.direccion = direccion;
-        this.fecha_nacimiento = fecha_nacimiento;
+        this.fecha_cita = fecha_cita;
         this.genero = genero;
         this.hospital = hospital;
         this.doctor = doctor;
         this.notificacion = notificacion = "No";
+        this.tipo_cita = tipo_cita;
+        this.hora_cita = hora_cita;
     }
 
     async guardar(){
@@ -23,12 +25,15 @@ class Cita{
         cedula,
         numeroCelular,
         email,
-        fechaNacimiento,
+        fechaCita,
         direccion,
         genero,
         hospital,
         doctor,
-        notificacion)
+        notificacion,
+        tipoCita,
+        horaCita
+    )
 
         VALUES
         (
@@ -37,12 +42,14 @@ class Cita{
         '${this.cedula}',
         '${this.numero_celular}',
         '${this.email}',
-        '${this.fecha_nacimiento}',
+        '${this.fecha_cita}',
         '${this.direccion}',
         '${this.genero}',
         '${this.hospital}',
         '${this.doctor}',
-        '${this.notificacion}'
+        '${this.notificacion}',
+        '${this.tipo_cita}',
+        '${this.hora_cita}'
         );
     `;
        return await db.ejecutar(query); 
@@ -62,13 +69,14 @@ class Cita{
         var diaA = ahora.getDate();
         var mesA = ahora.getMonth() + 1; // Los meses comienzan desde 0
         var añoA = ahora.getFullYear();
-        /*var horaA = ahora.getHours();
+        var horaA = ahora.getHours();
         var minutoA = ahora.getMinutes();
-        var segundoA = ahora.getSeconds();*/
+        /*var segundoA = ahora.getSeconds();*/
 
+        const hora = horaA + ":" + minutoA;
         const fecha = `${añoA}-${mesA < 10 ? '0' : ''}${mesA}-${diaA < 10 ? '0' : ''}${diaA}`;
        // console.log(fecha);
-        const query = `SELECT cedula, fechaNacimiento, nombre, apellido, email, doctor, hospital FROM cita WHERE fechaNacimiento = '${fecha}' && notificacion = '${notificacion}'`;
+        const query = `SELECT cedula, fechaCita, nombre, apellido, email, doctor, horaCita, hospital FROM cita WHERE fechaCita = '${fecha}' && horaCita = '${hora}' && notificacion = '${notificacion}'`;
         const respuesta = await db.listar(query, true);
 
         if (respuesta.resultado.length > 0) {

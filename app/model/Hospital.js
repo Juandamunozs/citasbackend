@@ -26,9 +26,10 @@ class Hospital{
     }
 
     static async listar(){
-        const query = `SELECT nombreHospital, direccionHospital, telefonoHospital FROM hospital;`
+        const query = `SELECT nombreHospital, direccionHospital FROM hospital;`
+        const respuesta = await db.listar(query, true);
 
-        return await db.listar(query, true) //asi se llama todos los usuarios
+        return respuesta; //asi se llama todos los usuarios
         //return await db.listar(query) asi se llama un usuario el 1
     }
 }
