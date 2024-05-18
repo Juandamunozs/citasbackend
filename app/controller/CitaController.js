@@ -21,7 +21,7 @@ class CitaController {
         
         try {
             const res_guardar = await citas.guardar();
-          console.log(res_guardar.respuesta);
+          //console.log(res_guardar.respuesta);
             // Si la cita se guarda correctamente, enviar el correo
             if (res_guardar.exito && res_guardar.estado === 200){
                 // Ruta relativa del logo de tu empresa dentro de la carpeta 'logo'
