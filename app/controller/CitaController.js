@@ -3,26 +3,39 @@ const nodemailer = require('nodemailer');
 const fs = require('fs');
 const path = require('path');
 
+function generarCodigo() {
+    const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let codigo = '';
+    for (let i = 0; i < 4; i++) {
+        codigo += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+    }
+    return codigo;
+}
+
 class CitaController {
+
+    
     async guardar(req, res) {
         const body = req.body;
-        const citas = new Cita(body.nombre, body.apellido, body.cedula, body.numero_celular, body.email, body.direccion, body.fecha_cita, body.genero, body.hospital, body.doctor, body.notificacion, body.tipo_cita, body.hora_cita);
+        const codigo = generarCodigo();
+        const citas = new Cita(body.nombre, body.apellido, body.cedula, body.numero_celular, body.email, body.direccion, body.fecha_cita, body.genero, body.hospital, body.doctor, body.notificacion, body.tipo_cita, body.hora_cita, codigo);
         const res_guardar = await citas.guardar();
         res.json(res_guardar);
     }
 
+
     async mostrar(req, res) {
-        const {cedula} = req.body;
+        const {codigo} = req.body;
         
-        const cosultar = await Cita.consultar(cedula);
+        const cosultar = await Cita.consultar(codigo);
         
         res.json(cosultar);
     }
 
     async borrar(req, res) {
-        const {cedula} = req.body;
-
-        const borrar = await Cita.borrarCita(cedula);
+        const {codigo} = req.body;
+        
+        const borrar = await Cita.borrarCita(codigo);
 
         res.json(borrar);
     }

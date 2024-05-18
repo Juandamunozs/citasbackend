@@ -1,6 +1,6 @@
 const db = require('../src/db');
 class Cita{
-    constructor(nombre, apellido, cedula, numero_celular, email, direccion, fecha_cita, genero, hospital, doctor, notificacion, tipo_cita, hora_cita){
+    constructor(nombre, apellido, cedula, numero_celular, email, direccion, fecha_cita, genero, hospital, doctor, notificacion, tipo_cita, hora_cita, codigo){
         this.nombre = nombre;
         this.apellido = apellido;
         this.cedula = cedula;
@@ -14,7 +14,10 @@ class Cita{
         this.notificacion = notificacion = "No";
         this.tipo_cita = tipo_cita;
         this.hora_cita = hora_cita;
+        this.codigo = codigo
     }
+    
+   
 
     async guardar(){
         const query = `
@@ -32,7 +35,8 @@ class Cita{
         doctor,
         notificacion,
         tipoCita,
-        horaCita
+        horaCita,
+        codigo
     )
 
         VALUES
@@ -49,7 +53,8 @@ class Cita{
         '${this.doctor}',
         '${this.notificacion}',
         '${this.tipo_cita}',
-        '${this.hora_cita}'
+        '${this.hora_cita}',
+        '${this.codigo}'
         );
     `;
        return await db.ejecutar(query); 
@@ -112,24 +117,36 @@ class Cita{
        // }
     }
 
-    static async borrarCita(cedula) {
-        // Formar la consulta SQL
-        const query = `DELETE FROM cita WHERE cedula = '${cedula}'`;
-        
-        // Ejecutar la consulta en la base de datos
+    static async borrarCita(codigo) {
         try {
+           // Formar la consulta SQL para verificar si la cita existe
+            const existeQuery = `SELECT codigo FROM cita WHERE codigo = '${codigo}'`;
             
-            // Si la consulta se ejecutó correctamente, devolver true indicando que la cita se eliminó correctamente.
-            return true;
+            // Ejecutar la consulta para verificar si la cita existe
+            const respuesta = await db.listar(existeQuery, true);
+            
+            // Verificar si la cita existe
+            if (respuesta.resultado.length > 0) {
+                // Si la cita existe, formar la consulta SQL para borrarla*/
+                const borrarQuery = `DELETE FROM cita WHERE codigo = '${codigo}'`;
+                // Ejecutar la consulta para borrar la cita
+                await db.ejecutar(borrarQuery);
+                
+                // Devolver un mensaje indicando que la cita se ha borrado correctamente
+                return { mensaje: "La cita se ha borrado correctamente." }
+            } else {
+                // Si la cita no existe, devolver un mensaje indicando que no se encontró la cita
+                return { mensaje: "La cita no existe." };
+            }
         } catch (error) {
-            // Si hubo un error al ejecutar la consulta, devolver false indicando que la cita no se eliminó.
-            console.error("Error al borrar la cita:", error);
-            return false;
+            // Manejar cualquier error que ocurra durante el proceso
+            console.error("Error al intentar borrar la cita:", error);
+            return { mensaje: "Ha ocurrido un error al intentar borrar la cita." };
         }
     }
-
-    static async consultar(cedula) {
-        const query = `SELECT cedula, fechaCita, nombre, apellido, email, doctor, horaCita, hospital FROM cita WHERE cedula = '${cedula}'`;
+  
+    static async consultar(codigo) {
+        const query = `SELECT cedula, fechaCita, nombre, apellido, email, doctor, horaCita, codigo, hospital FROM cita WHERE codigo = '${codigo}'`;
         const respuesta = await db.listar(query, true);
         try {
             
