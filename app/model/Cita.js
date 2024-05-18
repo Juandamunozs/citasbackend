@@ -81,7 +81,7 @@ class Cita{
         const hora = horaA + ":" + minutoA;
         const fecha = `${añoA}-${mesA < 10 ? '0' : ''}${mesA}-${diaA < 10 ? '0' : ''}${diaA}`;
        // console.log(fecha);
-        const query = `SELECT cedula, fechaCita, nombre, apellido, email, doctor, horaCita, hospital FROM cita WHERE fechaCita = '${fecha}' && horaCita = '${hora}' && notificacion = '${notificacion}'`;
+        const query = `SELECT cedula, fechaCita, nombre, apellido, email, doctor, horaCita, hospital, codigo FROM cita WHERE fechaCita = '${fecha}' && horaCita = '${hora}' && notificacion = '${notificacion}'`;
         const respuesta = await db.listar(query, true);
 
         if (respuesta.resultado.length > 0) {
@@ -146,7 +146,7 @@ class Cita{
     }
   
     static async consultar(codigo) {
-        const query = `SELECT cedula, fechaCita, nombre, apellido, email, doctor, horaCita, codigo, hospital FROM cita WHERE codigo = '${codigo}'`;
+        const query = `SELECT nombre, tipoCita, hospital, doctor, fechaCita, horaCita FROM cita WHERE codigo = '${codigo}'`;
         const respuesta = await db.listar(query, true);
         try {
             

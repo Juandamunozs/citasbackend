@@ -54,6 +54,7 @@ class CitaController {
                     const doctor = resultado.doctor;
                     const apellido = resultado.apellido;
                     const hora = resultado.horaCita;
+                    const codigo = resultado.codigo;
 
                     // Ruta relativa del logo de tu empresa dentro de la carpeta 'logo'
                     const logoPath = path.join(__dirname, 'logo', 'MediCitas.png');
@@ -74,7 +75,7 @@ class CitaController {
                         from: 'medicitascali@gmail.com', // Dirección del remitente
                         to: email, // Dirección del destinatario
                         subject: 'Recordatorio de MediCita', // Asunto del correo electrónico
-                        text: 'Estimado(a) '+ nombre + ' '+ apellido +' recuerde asistir a su cita programada para la fecha ' + fecha  + ' a las ' + hora +' con el doctor '+ doctor +' en el hospital ' + hospital +' debe presentarse media hora antes de su cita con su documento de identidad.\n\nPara cualquier duda o consulta, por favor, comuníquese a medicitascali@gmail.com', // Cuerpo del correo electrónico
+                        text: 'Estimado(a) '+ nombre + ' '+ apellido +' recuerde asistir a su cita asignada con el codigo ' + codigo + ' para la fecha ' + fecha  + ' a las ' + hora +' con el doctor '+ doctor +' en el hospital ' + hospital +' debe presentarse media hora antes de su cita con su documento de identidad.\n\nPara cualquier duda o consulta, por favor, comuníquese a medicitascali@gmail.com', // Cuerpo del correo electrónico
                         attachments: [
                             {
                                 filename: 'MediCitas.png', // Nombre del archivo adjunto
