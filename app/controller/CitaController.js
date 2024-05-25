@@ -21,9 +21,14 @@ class CitaController {
         
         try {
             const res_guardar = await citas.guardar();
+            //console.log(codigo);
+
           //console.log(res_guardar.respuesta);
             // Si la cita se guarda correctamente, enviar el correo
             if (res_guardar.exito && res_guardar.estado === 200){
+
+              const actualizarDoctor = await Cita.actualizarDoctor(codigo);
+              //console.log(actualizarDoctor);
                 // Ruta relativa del logo de tu empresa dentro de la carpeta 'logo'
                 const logoPath = path.join(__dirname, 'logo', 'MediCitas.png');
                 // Lee el contenido de la imagen del logo

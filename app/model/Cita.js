@@ -57,8 +57,9 @@ class Cita{
         '${this.codigo}'
         );
     `;
-       return await db.ejecutar(query); 
+    return await db.ejecutar(query); 
     }
+    
     static async listar(){
         const query = `SELECT *FROM cita;`
 
@@ -120,16 +121,19 @@ class Cita{
     static async borrarCita(codigo) {
         try {
            // Formar la consulta SQL para verificar si la cita existe
-            const existeQuery = `SELECT codigo FROM cita WHERE codigo = '${codigo}'`;
-            
+            const existeQuery = `SELECT codigo, doctor FROM cita WHERE codigo = '${codigo}'`;
             // Ejecutar la consulta para verificar si la cita existe
             const respuesta = await db.listar(existeQuery, true);
-            
+            //console.log(respuesta);
             // Verificar si la cita existe
             if (respuesta.resultado.length > 0) {
                 // Si la cita existe, formar la consulta SQL para borrarla*/
+                const doctor = respuesta.resultado[0].doctor;
+                //console.log(doctor);
+                const updateQuery = `UPDATE doctor SET disponibilidad = 'Si' WHERE nombreDoctor = '${doctor}'`;
                 const borrarQuery = `DELETE FROM cita WHERE codigo = '${codigo}'`;
                 // Ejecutar la consulta para borrar la cita
+                await db.ejecutar(updateQuery);
                 await db.ejecutar(borrarQuery);
                 
                 // Devolver un mensaje indicando que la cita se ha borrado correctamente
@@ -156,6 +160,29 @@ class Cita{
             // Si hubo un error al ejecutar la consulta, devolver false indicando que la cita no se eliminó.
             console.error("Error al borrar la cita:", error);
             return false;
+        }
+    }
+    
+    static async actualizarDoctor(codigo) {
+        try {
+            const query = `SELECT doctor FROM cita WHERE codigo = '${codigo}'`;
+            const respuesta = await db.listar(query, true);
+    
+            if (respuesta.resultado.length > 0) {
+                const doctor = respuesta.resultado[0].doctor;
+                const updateQuery = `UPDATE doctor SET disponibilidad = 'No' WHERE nombreDoctor = '${doctor}'`;
+                await db.ejecutar(updateQuery);
+                
+                // Si la consulta se ejecutó correctamente, devolver un mensaje indicando que la cita se actualizó correctamente.
+                return { mensaje: "La disponibilidad del doctor se ha actualizado correctamente." };
+            } else {
+                // Si la cita no existe, devolver un mensaje indicando que no se encontró la cita.
+                return { mensaje: "La cita no existe." };
+            }
+        } catch (error) {
+            // Si hubo un error al ejecutar la consulta, devolver un mensaje indicando el error.
+            console.error("Error al actualizar la disponibilidad del doctor:", error);
+            return { mensaje: "Ha ocurrido un error al actualizar la disponibilidad del doctor." };
         }
     }
 
