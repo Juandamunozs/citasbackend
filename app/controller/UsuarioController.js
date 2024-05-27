@@ -57,7 +57,7 @@ switch (resultado) {
 module.exports = new UsuarioController;
 
 /*
-return 1 si es correcto inicia sin alerta.
+return true si es correcto inicia sin alerta.
 return 2 si no coincide nada alerta
 return 3 si no coincide contraseña 
 */

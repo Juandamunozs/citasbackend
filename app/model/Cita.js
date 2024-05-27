@@ -170,7 +170,7 @@ class Cita{
     
             if (respuesta.resultado.length > 0) {
                 const doctor = respuesta.resultado[0].doctor;
-                const updateQuery = `UPDATE doctor SET disponibilidad = 'No' WHERE nombreDoctor = '${doctor}'`;
+                const updateQuery = `UPDATE doctor SET disponibilidad = 'No' WHERE nombreDoctor = '${doctor}' `;
                 await db.ejecutar(updateQuery);
                 
                 // Si la consulta se ejecutó correctamente, devolver un mensaje indicando que la cita se actualizó correctamente.
@@ -183,6 +183,24 @@ class Cita{
             // Si hubo un error al ejecutar la consulta, devolver un mensaje indicando el error.
             console.error("Error al actualizar la disponibilidad del doctor:", error);
             return { mensaje: "Ha ocurrido un error al actualizar la disponibilidad del doctor." };
+        }
+    }
+
+    static async verificarUsuario(nombre, apellido, cedula, genero){
+        const query = `SELECT nombre, apellido, cedula, genero FROM cita WHERE nombre = '${nombre}'  && apellido = '${apellido}' && cedula = '${cedula}' && genero = '${genero}'`;
+        const respuesta = await db.listar(query);
+
+        if (respuesta.exito && respuesta.resultado) {
+            // Si se encontró un usuario con el tipo de documento y nombre de usuario proporcionados
+            //const usuarioEncontrado = respuesta.resultado;
+            //console.log("Cuenta ya existe");
+                // Si la contraseña no coincide
+            return true;
+           
+        } else {
+           // console.log("Cuenta no existe");
+            // Si no se encontraron usuarios con las credenciales proporcionadas
+            return false;
         }
     }
 

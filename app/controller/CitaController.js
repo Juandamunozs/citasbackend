@@ -16,7 +16,19 @@ class CitaController {
 
     async guardar(req, res) {
         const body = req.body;
+
+        const nombre = body.nombre;
+        const apellido = body.apellido;
+        const cedula = body.cedula;
+        const genero = body.genero;
+
+
+        const verificarUsuario = await Cita.verificarUsuario(nombre, apellido, cedula, genero);
+
+        if(verificarUsuario){
+
         const codigo = generarCodigo();
+
         const citas = new Cita(body.nombre, body.apellido, body.cedula, body.numero_celular, body.email, body.direccion, body.fecha_cita, body.genero, body.hospital, body.doctor, body.notificacion, body.tipo_cita, body.hora_cita, codigo);
         
         try {
@@ -74,6 +86,10 @@ class CitaController {
         } catch (error) {
             res.status(500).json({ success: false, message: 'Error al guardar la cita', error });
         }
+    }else{
+        res.json("Datos no coinciden señor");
+    }
+
     }
 
     async mostrar(req, res) {
