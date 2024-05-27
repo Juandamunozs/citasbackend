@@ -2,10 +2,21 @@ const Usuario = require('../model/Usuario');
 class UsuarioController{
     async guardar(req, res){
         const body = req.body;
+        const user_name = body.user_name;
 
-     const usuario = new Usuario(body.tipo_documento,body.user_name,body.password, body.name, body.email,body.edad, body.direccion, body.telefono);
-       const res_guardar = await usuario.guardar();
-        res.json(res_guardar);
+       // console.log(user_name);
+
+        const verificarExistencia = await Usuario.verificarCedula(user_name);
+
+        if(verificarExistencia){
+
+            const usuario = new Usuario(body.tipo_documento,body.user_name,body.password, body.name, body.email,body.edad, body.direccion, body.telefono);
+            const res_guardar = await usuario.guardar();
+             res.json(res_guardar);
+
+        }else{
+            res.json("existe");
+        }
 
     }
 
@@ -44,3 +55,9 @@ switch (resultado) {
 }
 
 module.exports = new UsuarioController;
+
+/*
+return 1 si es correcto inicia sin alerta.
+return 2 si no coincide nada alerta
+return 3 si no coincide contraseña 
+*/

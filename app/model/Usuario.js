@@ -12,6 +12,8 @@ class Usuario{
     }
 
     async guardar(){
+
+
         const query = `
         INSERT INTO citas.usuario 
         (
@@ -62,6 +64,24 @@ class Usuario{
         } else {
             // Si no se encontraron usuarios con las credenciales proporcionadas
             return 2;
+        }
+    }
+
+    static async verificarCedula(user_name){
+        const query = `SELECT * FROM usuario WHERE username = '${user_name}';`;
+        const respuesta = await db.listar(query);
+        //console.log(respuesta);
+        if (respuesta.exito && respuesta.resultado) {
+            // Si se encontró un usuario con el tipo de documento y nombre de usuario proporcionados
+            //const usuarioEncontrado = respuesta.resultado;
+            //console.log("Cuenta ya existe");
+                // Si la contraseña no coincide
+            return false;
+           
+        } else {
+           // console.log("Cuenta no existe");
+            // Si no se encontraron usuarios con las credenciales proporcionadas
+            return true;
         }
     }
 }
