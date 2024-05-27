@@ -46,19 +46,22 @@ class Usuario{
     }
 
     static async verificarCredenciales(tipo_documento, user_name, password) {
-        const query = `SELECT * FROM usuario WHERE tipoDocumento = '${tipo_documento}' AND username = '${user_name}' AND password = '${password}';`;
+        const query = `SELECT * FROM usuario WHERE tipoDocumento = '${tipo_documento}' AND username = '${user_name}';`;
         const respuesta = await db.listar(query);
-        /*console.log("Consulta SQL:", query);
-        console.log("Datos recibidos:", { tipo_documento, user_name, password });
-        console.log("Datos devueltos:", respuesta);*/
         
         if (respuesta.exito && respuesta.resultado) {
-            const usuarioEncontrado = respuesta.resultado.username;
-            //console.log("Usuario encontrado:", usuarioEncontrado);
-            return usuarioEncontrado;
+            // Si se encontró un usuario con el tipo de documento y nombre de usuario proporcionados
+            const usuarioEncontrado = respuesta.resultado;
+            if (usuarioEncontrado.password === password) {
+                // Si la contraseña coincide
+                return 1;
+            } else {
+                // Si la contraseña no coincide
+                return 3;
+            }
         } else {
-            //console.log("No se encontraron usuarios.");
-            return null;
+            // Si no se encontraron usuarios con las credenciales proporcionadas
+            return 2;
         }
     }
 }

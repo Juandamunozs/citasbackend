@@ -19,16 +19,26 @@ class UsuarioController{
         // Agregar esta línea para mostrar los datos recibidos en la solicitud
        // res.json({ tipo_documento, user_name, password });
     
-        const usuario = await Usuario.verificarCredenciales(tipo_documento, user_name, password);
+        const resultado = await Usuario.verificarCredenciales(tipo_documento, user_name, password);
+switch (resultado) {
+    case 1:
+        res.json(1);
+        break;
+    case 2:
+        // No se encontraron usuarios con las credenciales proporcionadas, muestra una alerta o ofrece recuperar contraseña.
+        //alert("Usuario no encontrado. ¿Quieres recuperar tu contraseña?");
+        res.json(2);
+        break;
+    case 3:
+        // La contraseña no coincide, ofrece recuperar la contraseña.
+        res.json(3);
+        break;
+    default:
+        // Manejar cualquier otro caso inesperado.
+        break;
+}
 
-        //console.log("Resultado de verificarCredenciales:", usuario);
-        if (usuario) {
-            // Credenciales válidas, puedes iniciar sesión
-            res.json({ mensaje: usuario/*, usuario*/ });
-        } else {
-            // Credenciales inválidas
-            res.json({ mensaje: false });
-        }
+        
     }
 
 }
