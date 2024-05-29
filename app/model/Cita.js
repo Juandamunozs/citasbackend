@@ -185,20 +185,44 @@ class Cita{
             return { mensaje: "Ha ocurrido un error al actualizar la disponibilidad del doctor." };
         }
     }
-    static async verificarUsuario(fecha, hora) {
+    static async verificarUsuario(fecha, hora,) {
             const query = `SELECT nombre, cedula, genero FROM cita WHERE fechaCita = '${fecha}' AND horaCita = '${hora}'`;
             const respuesta = await db.listar(query);
-            console.log(respuesta);
-            console.log(query);
+           // console.log(respuesta);
+            //console.log(query);
         
             if (respuesta.exito && respuesta.resultado) {
                 // Si se encontró un usuario con la fecha y hora proporcionados
-                return false;
+               // console.log("se encontro cita ya");
+                return true;
             } else {
                 // Si no se encontraron usuarios con las credenciales proporcionadas
-                return true;
+               // console.log("no se encontro cita ya");
+                return false;
             }
    }
+    static async verificarUserCedula(nombre, cedula){
+    const query = `SELECT name, username FROM usuario WHERE name = '${nombre}' AND username = '${cedula}'`;
+    const respuesta = await db.listar(query);
+    //console.log(query);
+
+    if (respuesta.exito && respuesta.resultado) {
+        // Si se encontró un usuario con el tipo de documento y nombre de usuario proporcionados
+        //const usuarioEncontrado = respuesta.resultado;
+        //console.log("Cuenta ya existe");
+            // Si la contraseña no coincide
+            //console.log("Usuario registrado");
+        return false;
+      
+    } else {
+       // console.log("Cuenta no existe");
+        // Si no se encontraron usuarios con las credenciales proporcionadas
+        //console.log("Usuario no registrado");
+        return true;
+       
+    }
+}
+
 }
 
 module.exports = Cita;
