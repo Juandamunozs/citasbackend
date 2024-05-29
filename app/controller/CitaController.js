@@ -17,15 +17,13 @@ class CitaController {
     async guardar(req, res) {
         const body = req.body;
 
-       // const nombre = body.nombre;
-        //const apellido = body.apellido;
-       // const cedula = body.cedula;
-       // const genero = body.genero;
+        const fecha = body.fecha_cita;
+        const hora = body.hora_cita;
 
+        const verificarUsuario= await Cita.verificarUsuario(fecha,hora);
+       
 
-        //const verificarUsuario = await Cita.verificarUsuario(nombre, cedula);
-
-    
+        if(verificarUsuario){
 
         const codigo = generarCodigo();
 
@@ -77,7 +75,7 @@ class CitaController {
                         res.status(500).json({ success: false, message: errorMessage });
                     } else {
                         const successMessage = `Correo electrónico enviado a ${body.nombre} ${body.apellido}: ${info.response}`;
-                        res.json({ success: true, message: successMessage, data: res_guardar });
+                        res.json(2);
                     }
                 });
             } else {
@@ -86,6 +84,9 @@ class CitaController {
         } catch (error) {
             res.status(500).json({ success: false, message: 'Error al guardar la cita', error });
         }
+    }else{
+        res.json(1);
+    }
 
     }
 

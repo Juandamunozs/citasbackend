@@ -185,7 +185,20 @@ class Cita{
             return { mensaje: "Ha ocurrido un error al actualizar la disponibilidad del doctor." };
         }
     }
-
+    static async verificarUsuario(fecha, hora) {
+            const query = `SELECT nombre, cedula, genero FROM cita WHERE fechaCita = '${fecha}' AND horaCita = '${hora}'`;
+            const respuesta = await db.listar(query);
+            console.log(respuesta);
+            console.log(query);
+        
+            if (respuesta.exito && respuesta.resultado) {
+                // Si se encontró un usuario con la fecha y hora proporcionados
+                return false;
+            } else {
+                // Si no se encontraron usuarios con las credenciales proporcionadas
+                return true;
+            }
+   }
 }
 
 module.exports = Cita;
